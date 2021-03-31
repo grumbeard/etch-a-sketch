@@ -8,8 +8,6 @@ for (let i = 0; i < (16*16); i++) {
 }
 
 // Add 'hover' effect to grid cells
-const gridCells = document.getElementsByClassName("grid-cell");
-// console.log(gridCells);
 gridContainer.addEventListener('mouseover', handleMouseover);
 
 function handleMouseover(e) {
