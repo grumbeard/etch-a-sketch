@@ -1,0 +1,14 @@
+#grid-container {
+    width: 600px;
+    height: 600px;
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+}
+
+.grid-cell {
+    background-color: pink;
+}
+
+.color-me {
+    background-color: black;
+}
