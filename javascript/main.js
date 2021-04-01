@@ -129,14 +129,15 @@ function handleChangeActionType(e) {
 
 // Add 'change grid size by drag' functionality
 const gridSizeSliderButton = document.getElementById("grid-size-slider-btn");
+const sliderLength = document.getElementById("grid-size-slider").offsetWidth;
 const gridSizeSliderContainer = document.getElementById("grid-size-slider-container");
 
-// Position grid size change button according to current square count (10 = half height of slider)
-gridSizeSliderButton.setAttribute("style", `top: ${squareCount-10}px`);
+// Position grid size change button according to current square count (20 = half height of slider)
+gridSizeSliderButton.setAttribute("style", `left: ${(squareCount / 100) * sliderLength - 20}px`);
 
 let dragging = false;
-let startY = 0;
-let newY = 0;
+let startX = 0;
+let newX = 0;
 
 gridSizeSliderButton.addEventListener("mousedown", handleDragStart);
 gridSizeSliderButton.addEventListener("mousemove", handleDragging);
@@ -145,18 +146,18 @@ gridSizeSliderContainer.addEventListener("mouseup", handleDragEnd);
 function handleDragStart(e) {
     if (!dragging) {
         dragging = true;
-        startY = e.clientY;
+        startX = e.clientX;
     }
 }
 
 function handleDragging(e) {
     if (dragging) {
-        let changeY = e.clientY - startY;
-        newY = squareCount + changeY;
-        if (newY < 1) {
-            newY = 1;
-        } else if (newY > 100) {
-            newY = 100;
+        let changeX = e.clientX - startX;
+        newX = squareCount + Math.floor(changeX/sliderLength * 100);
+        if (newX < 1) {
+            newX = 1;
+        } else if (newX > 100) {
+            newX = 100;
         }
         updateButtonPosition();
     }
@@ -166,8 +167,8 @@ function handleDragging(e) {
 function handleDragEnd(e) {
     if (dragging) {
         dragging = false;
-        console.log("shift: " + (newY - squareCount));
-        squareCount = newY;
+        console.log("shift: " + (newX - squareCount));
+        squareCount = newX;
         console.log("squareCount: " + squareCount);
         handleReset();
         updateGridSize();
@@ -175,5 +176,5 @@ function handleDragEnd(e) {
 }
 
 function updateButtonPosition() {
-    gridSizeSliderButton.setAttribute("style", `top: ${newY}px`);
+    gridSizeSliderButton.setAttribute("style", `left: ${(newX / 100) * sliderLength - 10}px`);
 }
