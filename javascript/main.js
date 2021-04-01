@@ -30,8 +30,7 @@ function paintGrid(squareCount) {
 gridContainer.addEventListener('mouseover', handleMouseover);
 
 function handleMouseover(e) {
-    let classes = e.target.classList
-    if (!classes.contains("color-me")) classes.add("color-me");
+    e.target.style.backgroundColor = `rgba(${222}, ${222}, ${111}, 0.33)`;
 }
 
 
@@ -50,8 +49,7 @@ const gridCells = document.querySelectorAll(".grid-cell");
 // Define 'remove color' feature for erasing all drawing on grid
 function removeColor(cells) {
     cells.forEach(cell => {
-        let classes = cell.classList;
-        if (classes.contains("color-me")) classes.remove("color-me");
+        cell.style.backgroundColor = "pink";
     });
 }
 
