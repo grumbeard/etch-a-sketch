@@ -1,12 +1,19 @@
 #grid-container {
     width: 600px;
     height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-row {
+    flex: 1;
     display: grid;
-    grid-template-columns: repeat(16, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(6px, 1fr));
 }
 
 .grid-cell {
     background-color: pink;
+    min-height: 5px;
 }
 
 .color-me {
