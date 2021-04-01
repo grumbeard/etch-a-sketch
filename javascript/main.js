@@ -1,22 +1,26 @@
 const gridContainer = document.getElementById("grid-container");
+const gridSizeNumber = document.getElementById("grid-size-number");
 let actionType = "paintbrush";
+let squareCount = 16;
 
 
 // Add 16 x 16 cells to create grid
-paintGrid(16);
+paintGrid(squareCount);
+// Display current grid size
+updateGridSize();
 
 // Define 'paint grid' feature to create grid with given dimensions
-function paintGrid(squareCount) {
+function paintGrid(squareNum) {
     // Remove all cells in grid
     gridContainer.innerHTML = "";
-
+    
     // Recreate cells in grid
-    for (let i = 0; i < squareCount; i++) {
+    for (let i = 0; i < squareNum; i++) {
         /* Create a single role of cell elements
-            Creating cells row by row allows cells to flex to equal width and height*/
+        Creating cells row by row allows cells to flex to equal width and height*/
         let gridRow = document.createElement("div");
         gridRow.className="grid-row";
-        for (let j = 0; j < squareCount; j++) {
+        for (let j = 0; j < squareNum; j++) {
             // Create cell elements to add to row
             let gridCell = document.createElement("div");
             gridCell.className="grid-cell";
@@ -26,6 +30,12 @@ function paintGrid(squareCount) {
         gridContainer.appendChild(gridRow);
     }
 }
+
+// Define 'update grid size' feature
+function updateGridSize() {
+    gridSizeNumber.innerText = `${squareCount} x ${squareCount}`
+}
+
 
 // Add 'hover' effect to grid cells
 gridContainer.addEventListener('mouseover', handleMouseover);
@@ -91,12 +101,10 @@ function removeColor(cells) {
 
 // Define 'reset grid square count' feature for repainting grid with new dimensions
 function resetGridSquareCount() {
-    let squareCount = 0;
-    while (squareCount < 1 || squareCount > 100) {
-        squareCount = prompt("How many squares?");
-    }
-    paintGrid(squareCount);
+    if (squareCount >= 1 && squareCount <= 100) paintGrid(squareCount);
 }
+
+
 
 // FANCY STUFF
 
@@ -117,4 +125,55 @@ function handleChangeActionType(e) {
     e.target.setAttribute("src", `images/${newActionType}.svg`);
     // update element attributes (data-type)
     e.target.setAttribute("data-type", newActionType);
+}
+
+// Add 'change grid size by drag' functionality
+const gridSizeSliderButton = document.getElementById("grid-size-slider-btn");
+const gridSizeSliderContainer = document.getElementById("grid-size-slider-container");
+
+// Position grid size change button according to current square count (10 = half height of slider)
+gridSizeSliderButton.setAttribute("style", `top: ${squareCount-10}px`);
+
+let dragging = false;
+let startY = 0;
+let newY = 0;
+
+gridSizeSliderButton.addEventListener("mousedown", handleDragStart);
+gridSizeSliderButton.addEventListener("mousemove", handleDragging);
+gridSizeSliderContainer.addEventListener("mouseup", handleDragEnd);
+
+function handleDragStart(e) {
+    if (!dragging) {
+        dragging = true;
+        startY = e.clientY;
+    }
+}
+
+function handleDragging(e) {
+    if (dragging) {
+        let changeY = e.clientY - startY;
+        newY = squareCount + changeY;
+        if (newY < 1) {
+            newY = 1;
+        } else if (newY > 100) {
+            newY = 100;
+        }
+        updateButtonPosition();
+    }
+}
+
+
+function handleDragEnd(e) {
+    if (dragging) {
+        dragging = false;
+        console.log("shift: " + (newY - squareCount));
+        squareCount = newY;
+        console.log("squareCount: " + squareCount);
+        handleReset();
+        updateGridSize();
+    }
+}
+
+function updateButtonPosition() {
+    gridSizeSliderButton.setAttribute("style", `top: ${newY}px`);
 }
