@@ -30,7 +30,36 @@ function paintGrid(squareCount) {
 gridContainer.addEventListener('mouseover', handleMouseover);
 
 function handleMouseover(e) {
-    e.target.style.backgroundColor = `rgba(${222}, ${222}, ${111}, 0.33)`;
+    colorCell(e.target);
+}
+
+// Define 'color cell' feature
+function colorCell(cell, type = "random") {
+    let color = "";
+    let cellColor = cell.style.backgroundColor;
+
+    switch (type) {
+        case "random":
+            color = `rgba(${randomRGB()}, ${randomRGB()}, ${randomRGB()}, 0.3)`;
+            break;
+    }
+
+    // Add 'darken cell' feature to increase opacity and tint on rehover (avoid recoloring cells)
+    if (cellColor == "") {
+        cell.style.backgroundColor = color;
+    } else {
+        // If not too opaque / black, increase opacity and add black tint
+        let rgbaValues = cellColor.match(/(\b\w*\.?\w)/g);
+        if (rgbaValues[1] > 10 || rgbaValues[2] > 10 || rgbaValues[3] > 10 || rgbaValues[4] < 0.8) {
+            cell.style.backgroundColor = `rgba(${rgbaValues[1]*0.5}, ${rgbaValues[2]*0.5}, ${rgbaValues[3]*0.5}, ${parseFloat(rgbaValues[4]*1.4)})`
+            console.log(cell.style.backgroundColor);
+        }
+    }
+}
+
+// Generate random rgb value
+function randomRGB() {
+    return Math.floor(Math.random()*256);
 }
 
 
