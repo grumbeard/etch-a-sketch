@@ -1,4 +1,5 @@
 const gridContainer = document.getElementById("grid-container");
+let actionType = "paintbrush";
 
 
 // Add 16 x 16 cells to create grid
@@ -30,7 +31,11 @@ function paintGrid(squareCount) {
 gridContainer.addEventListener('mouseover', handleMouseover);
 
 function handleMouseover(e) {
-    colorCell(e.target);
+    if (actionType == "paintbrush") {
+        colorCell(e.target);
+    } else if (actionType == "eraser") {
+        colorCell(e.target, "base")
+    }
 }
 
 // Define 'color cell' feature
@@ -42,17 +47,19 @@ function colorCell(cell, type = "random") {
         case "random":
             color = `rgba(${randomRGB()}, ${randomRGB()}, ${randomRGB()}, 0.3)`;
             break;
+        case "base":
+            color = "";
+            break;
     }
 
     // Add 'darken cell' feature to increase opacity and tint on rehover (avoid recoloring cells)
-    if (cellColor == "") {
+    if (cellColor == "" || type == "base") {
         cell.style.backgroundColor = color;
     } else {
         // If not too opaque / black, increase opacity and add black tint
         let rgbaValues = cellColor.match(/(\b\w*\.?\w)/g);
         if (rgbaValues[1] > 10 || rgbaValues[2] > 10 || rgbaValues[3] > 10 || rgbaValues[4] < 0.8) {
             cell.style.backgroundColor = `rgba(${rgbaValues[1]*0.5}, ${rgbaValues[2]*0.5}, ${rgbaValues[3]*0.5}, ${parseFloat(rgbaValues[4]*1.4)})`
-            console.log(cell.style.backgroundColor);
         }
     }
 }
@@ -89,4 +96,25 @@ function resetGridSquareCount() {
         squareCount = prompt("How many squares?");
     }
     paintGrid(squareCount);
+}
+
+// FANCY STUFF
+
+// Add 'change action type' functionality (paintbrush <=> eraser)
+const actionTypeButton = document.getElementsByClassName("action-type-btn")[0];
+actionTypeButton.addEventListener("click", handleChangeActionType);
+
+function handleChangeActionType(e) {
+    // Paintbrush <==> Eraser
+    let currentActionType = e.target.dataset.type;
+    let newActionType = "";
+
+    (currentActionType == "paintbrush") ? newActionType = "eraser" : newActionType = "paintbrush";
+
+    // switch action type which will eventually switch paint color
+    actionType = newActionType;
+    // change image
+    e.target.setAttribute("src", `images/${newActionType}.svg`);
+    // update element attributes (data-type)
+    e.target.setAttribute("data-type", newActionType);
 }
