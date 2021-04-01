@@ -113,13 +113,13 @@ main {
 }
 
 #reset-btn {
-    height: 10em;
-    width: 10em;
+    height: 10vw;
+    width: 10vw;
     margin: 0 auto;
     border-radius: 50%;
     border: 5px solid black;
     font-weight: 900;
-    font-size: 2em;
+    font-size: 2vw;
     display: flex;
     justify-content: center;
     align-items: center;
