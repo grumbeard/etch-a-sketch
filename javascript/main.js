@@ -24,6 +24,7 @@ function paintGrid(squareNum) {
             // Create cell elements to add to row
             let gridCell = document.createElement("div");
             gridCell.className="grid-cell";
+            gridCell.addEventListener('mouseover', handleMouseover);
             gridRow.appendChild(gridCell);
         }
         // Add single row of cell elements to grid
@@ -38,12 +39,6 @@ function updateGridSize() {
 
 
 // Add 'hover' effect to grid cells
-// Use querySelector to obtain a static NodeList so it can be iterate over later for removal of color
-const gridCells = document.querySelectorAll(".grid-cell");
-gridCells.forEach(cell => {
-    cell.addEventListener('mouseover', handleMouseover);
-});
-
 function handleMouseover(e) {
     if (actionType == "paintbrush") {
         colorCell(e.target);
@@ -56,7 +51,7 @@ function handleMouseover(e) {
 function colorCell(cell, type = "random") {
     let color = "";
     let cellColor = cell.style.backgroundColor;
-
+    
     switch (type) {
         case "random":
             color = `rgba(${randomRGB()}, ${randomRGB()}, ${randomRGB()}, 0.3)`;
@@ -65,7 +60,7 @@ function colorCell(cell, type = "random") {
             color = "";
             break;
     }
-
+        
     // Add 'darken cell' feature to increase opacity and tint on rehover (avoid recoloring cells)
     if (cellColor == "" || type == "base") {
         cell.style.backgroundColor = color;
@@ -77,7 +72,7 @@ function colorCell(cell, type = "random") {
         }
     }
 }
-
+        
 // Generate random rgb value
 function randomRGB() {
     return Math.floor(Math.random()*256);
@@ -87,6 +82,9 @@ function randomRGB() {
 // Add 'reset' functionality through button "reset-btn"
 const resetButton = document.getElementById("reset-btn");
 resetButton.addEventListener('click', handleReset);
+            
+// Use querySelector to obtain a static NodeList so it can be iterate over later for removal of color
+const gridCells = document.querySelectorAll(".grid-cell");
 
 function handleReset() {
     removeColor(gridCells);
@@ -168,9 +166,7 @@ function handleDragging(e) {
 function handleDragEnd(e) {
     if (dragging) {
         dragging = false;
-        console.log("shift: " + (newX - squareCount));
         squareCount = newX;
-        console.log("squareCount: " + squareCount);
         handleReset();
         updateGridSize();
     }
