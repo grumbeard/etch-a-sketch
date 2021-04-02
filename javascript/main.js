@@ -38,7 +38,11 @@ function updateGridSize() {
 
 
 // Add 'hover' effect to grid cells
-gridContainer.addEventListener('mouseover', handleMouseover);
+// Use querySelector to obtain a static NodeList so it can be iterate over later for removal of color
+const gridCells = document.querySelectorAll(".grid-cell");
+gridCells.forEach(cell => {
+    cell.addEventListener('mouseover', handleMouseover);
+});
 
 function handleMouseover(e) {
     if (actionType == "paintbrush") {
@@ -88,9 +92,6 @@ function handleReset() {
     removeColor(gridCells);
     resetGridSquareCount();
 }
-
-// Use querySelector to obtain a static NodeList to iterate over for removal of color
-const gridCells = document.querySelectorAll(".grid-cell");
 
 // Define 'remove color' feature for erasing all drawing on grid
 function removeColor(cells) {
