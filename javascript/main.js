@@ -124,6 +124,8 @@ function handleChangeActionType(e) {
     e.target.setAttribute("src", `images/${newActionType}.svg`);
     // update element attributes (data-type)
     e.target.setAttribute("data-type", newActionType);
+    // update element attributes (alt-text)
+    e.target.setAttribute("alt-text", `Action Type selected is ${newActionType[0].toUpperCase() + newActionType.substring(1)}`)
 }
 
 // Add 'change grid size by drag' functionality
