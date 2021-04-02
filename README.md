@@ -2,6 +2,7 @@
 # Project #3: Etch-a-Sketch
 
 **Goal**: Create an interactive sketch pad allowing users to draw within a grid in a chosen style. This exercise can be found in The Odin Project [curriculum](https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/etch-a-sketch-project).
+**Live Link**: 👉 https://grumbeard.github.io/etch-a-sketch/
 
 ## Phase 1: Create a working sketch pad
 At this point, the exercise requirements (+optional) are fulfilled:
@@ -20,7 +21,6 @@ At this point, the exercise requirements (+optional) are fulfilled:
 - Added an 'Erase' mode to paint over cells with base color
 - **Users can toggle between 'Paint' and 'Erase' modes by clicking the respective image controls**
 - Sketch pad placed into a responsive layout for different device widths
-![image](https://user-images.githubusercontent.com/51464365/113398266-e470a400-93d0-11eb-8bfd-8a11bf5eadf7.png)
 
 ### Key Learnings
 - Improved understanding of DOM manipulation and Event Handling, including prevention of unintended propagation (had to fix a bug!)
@@ -29,3 +29,5 @@ At this point, the exercise requirements (+optional) are fulfilled:
   - [stackoverflow](https://stackoverflow.com/questions/14095880/simple-pure-javascript-drag-controller-slider) was helpful to get a basic understanding of how it might work, but eventual implementation was different (and heavily refactored after attempting various approaches)
   - Learnt how to obtain element width info using JavaScript ([offsetWidth property](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetWidth))
 - Learnt to use CSS filters as alternative method of providing shadow effect under SVG paths
+
+![image](https://user-images.githubusercontent.com/51464365/113398266-e470a400-93d0-11eb-8bfd-8a11bf5eadf7.png)
