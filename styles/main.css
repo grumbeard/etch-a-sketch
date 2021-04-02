@@ -52,7 +52,6 @@ main {
 
 .grid-cell {
     background-color: pink;
-    min-height: 5px;
 }
 
 /* CONTROLS AREA */
