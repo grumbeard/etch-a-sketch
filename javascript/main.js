@@ -155,7 +155,6 @@ function handleDragging(e) {
     if (dragging) {
         let changeX = e.clientX - startX;
         newX = squareCount + Math.floor(changeX/sliderLength * 100);
-        console.log(newX);
         if (newX < 1) {
             newX = 1;
         } else if (newX > 100) {
